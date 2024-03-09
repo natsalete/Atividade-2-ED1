@@ -61,8 +61,9 @@ struct cliente{
     char sexo;
 
     void ler(){
+        cin.ignore();
         cout << "Digite seu nome: " << endl;
-        cin >> nome;
+        getline(cin,nome);
 
         data.lerDataNascimento();
         data.calcularIdade();
