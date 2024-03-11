@@ -33,6 +33,8 @@ struct funcionario{
 
 
     void imprimir(){
+        cout.precision(2);
+        cout.setf(ios::fixed);
         cout << "Nome : " << nome << endl;
         cout << "Cargo: " << cargo << endl;
         cout << "Salario base: R$" << salarioBase << endl;
@@ -79,7 +81,7 @@ struct loja{
             return;
         }
 
-        int mediaBase = 0, mediaLiquida;
+        double mediaBase = 0, mediaLiquida = 0;
         for (int i = 0; i < qtdFuncionario; i++) {
             mediaBase += funcionarios[i].salarioBase;
             mediaLiquida += funcionarios[i].sLiquido;
@@ -87,6 +89,8 @@ struct loja{
         mediaBase /= qtdFuncionario;
         mediaLiquida /= qtdFuncionario;
 
+        cout.precision(1);
+        cout.setf(ios::fixed);
         cout << "Media de Salario Base : " << mediaBase << endl << endl;
         cout << "Media de Salario Liquido : " << mediaLiquida << endl;
     }
@@ -98,8 +102,8 @@ struct loja{
         }
 
 
-        int maiorBase = 0, posicaoBase = -1;
-        int maiorLiquido = 0, posicaoLiquido = -1;
+        double maiorBase = 0; int posicaoBase = -1;
+        double maiorLiquido = 0; int posicaoLiquido = -1;
         for (int i = 0; i < qtdFuncionario; i++) {
             if (funcionarios[i].salarioBase > maiorBase) {
                 maiorBase = funcionarios[i].salarioBase;
