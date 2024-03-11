@@ -18,13 +18,16 @@ struct Conjunto{
     int conjunto[MAX_TAMANHO];
     int tamanho;
 
-    Conjunto(){
+    void conjuntoVazio(){
         tamanho = 0;
+        cout << "Conjunto vazio criado!" << endl;
     }
 
     void ler(){
-        cout << "Digite o tamanho do conjunto: ";
-        cin >> tamanho;
+        do{
+            cout << "Digite o tamanho do conjunto: ";
+            cin >> tamanho;
+        }while(tamanho <= 0 || tamanho > 20);
 
         cout << "Digite os elementos do conjunto de tamanho " << tamanho << ": ";
         for(int i = 0; i < tamanho; i++){
@@ -43,6 +46,11 @@ struct Conjunto{
 struct TDA{
     Conjunto c[MAX_CONJUNTO];
     int qtdConjuntos = 0;
+
+    void criarConjuntoVazio(){
+       c[qtdConjuntos].conjuntoVazio();
+       qtdConjuntos++;
+    }
 
     void lerConjunto(){
         if(qtdConjuntos == 2){
@@ -137,31 +145,35 @@ int main(){
     do{
         cout << "------------------------------------------" << endl;
         cout << "       MENU" << endl;
-        cout << "1. Ler os dados de um conjunto." << endl;
-        cout << "2. Unir  os dois conjuntos." << endl;
-        cout << "3. Fazer intersecao dos dois conjuntos." << endl;
-        cout << "4. Imprimir conjuntos." << endl;
-        cout << "5. Sair ." << endl << endl;
+        cout << "1. Criar conjunto vazio." << endl;
+        cout << "2. Ler os dados de um conjunto." << endl;
+        cout << "3. Unir  os dois conjuntos." << endl;
+        cout << "4. Fazer intersecao dos dois conjuntos." << endl;
+        cout << "5. Imprimir conjuntos." << endl;
+        cout << "6. Sair ." << endl << endl;
 
         cin >> opcao;
 
         switch(opcao){
             case 1:
-                conj.lerConjunto();
+                conj.criarConjuntoVazio();
                 break;
             case 2:
-                conj.unir();
+                conj.lerConjunto();
                 break;
             case 3:
-                conj.intersecao();
+                conj.unir();
                 break;
             case 4:
+                conj.intersecao();
+                break;
+            case 5:
                 conj.imprimirConjunto();
                 break;
 
         };
 
-    }while(opcao != 5);
+    }while(opcao != 6);
 
 
     return 0;
