@@ -48,6 +48,10 @@ struct TDA{
     int qtdConjuntos = 0;
 
     void criarConjuntoVazio(){
+        if(qtdConjuntos == 2){
+            cout << "Limite de conjuntos atingido!" << endl;
+            return;
+        }
        c[qtdConjuntos].conjuntoVazio();
        qtdConjuntos++;
     }
