@@ -1,6 +1,8 @@
 #include <iostream>
 #define MAX_TAMANHO 20
-#define MAX_CONJUNTO 2
+#define MAX_CONJUNTO 10
+#include <vector>
+#include <algorithm>
 
 using namespace std;
 
@@ -48,7 +50,7 @@ struct TDA{
     int qtdConjuntos = 0;
 
     void criarConjuntoVazio(){
-        if(qtdConjuntos == 2){
+        if(qtdConjuntos == MAX_CONJUNTO){
             cout << "Limite de conjuntos atingido!" << endl;
             return;
         }
@@ -57,7 +59,7 @@ struct TDA{
     }
 
     void lerConjunto(){
-        if(qtdConjuntos == 2){
+        if(qtdConjuntos == MAX_CONJUNTO){
             cout << "Limite de conjuntos atingido!" << endl;
             return;
         }
@@ -76,19 +78,55 @@ struct TDA{
             return;
         }
 
-        int resultadoUniao[40];
-        for(int i = 0; i < c[0].tamanho; i++){
-            resultadoUniao[i] = c[0].conjunto[i];
+        cout << "Dos conjuntos cadastrados quais deseja unir ? | Obs: Escolha dois conjuntos!" << endl;
+        for (int i = 0; i < qtdConjuntos; i++) {
+            cout << "Conjunto " << i + 1 << ": { ";
+            c[i].imprimir();
         }
 
-        int j = 0;
-        for(int i = c[0].tamanho; i < c[1].tamanho + c[0].tamanho; i++){
-            resultadoUniao[i] = c[1].conjunto[j];
-            j++;
+        int opcaoA, opcaoB;
+
+
+        do{
+            cin >> opcaoA;
+            if(opcaoA <= 0 || opcaoA > qtdConjuntos){
+                cout << "Escolha um Conjunto disponivel!!" << endl;
+            }
+        }while(opcaoA <= 0|| opcaoA > qtdConjuntos);
+
+        do{
+            cin >> opcaoB;
+            if(opcaoB <= 0 || opcaoB > qtdConjuntos){
+                cout << "Escolha um Conjunto disponivel!!" << endl;
+            }else if(opcaoB == opcaoA){
+                cout << "Escolha um Conjunto diferente!" << endl;
+            }
+        }while(opcaoB <= 0 || opcaoB > qtdConjuntos || opcaoB == opcaoA);
+
+
+        vector<int>resultadoUniao;
+        for(int i = 0; i < c[opcaoA-1].tamanho; i++){
+            resultadoUniao.push_back(c[opcaoA-1].conjunto[i]);
         }
 
-        cout << "Conjunto 1 U Conjuto 2: { ";
-        for(int i = 0; i < c[1].tamanho + c[0].tamanho; i++){
+        for(int i = 0; i < c[opcaoB-1].tamanho ; i++){
+            resultadoUniao.push_back(c[opcaoB-1].conjunto[i]);
+
+        }
+
+        sort(resultadoUniao.begin(), resultadoUniao.end());
+
+        for(int i = 0; i < resultadoUniao.size(); i++){
+          for(int j = i+1; j < resultadoUniao.size(); j++){
+                if(resultadoUniao[i] == resultadoUniao[j]){
+                   resultadoUniao.erase(resultadoUniao.begin()+i);
+                   break;
+                }
+            }
+        }
+
+        cout << "Conjunto " << opcaoA << " U Conjuto " << opcaoB << ": { ";
+        for(int i = 0; i < resultadoUniao.size(); i++){
             cout << resultadoUniao[i] << " ";
         }
 
@@ -105,17 +143,41 @@ struct TDA{
             return;
         }
 
+        cout << "Dos conjuntos cadastrados quais deseja fazer a intersecao ? | Obs: Escolha dois conjuntos!" << endl;
+        for (int i = 0; i < qtdConjuntos; i++) {
+            cout << "Conjunto " << i + 1 << ": { ";
+            c[i].imprimir();
+        }
+
+        int opcaoA, opcaoB;
+        do{
+            cin >> opcaoA;
+            if(opcaoA <= 0 || opcaoA > qtdConjuntos){
+                cout << "Escolha um Conjunto disponivel!!" << endl;
+            }
+        }while(opcaoA <= 0|| opcaoA > qtdConjuntos);
+
+        do{
+            cin >> opcaoB;
+            if(opcaoB <= 0 || opcaoB > qtdConjuntos){
+                cout << "Escolha um Conjunto disponivel!!" << endl;
+            }else if(opcaoB == opcaoA){
+                cout << "Escolha um Conjunto diferente!" << endl;
+            }
+        }while(opcaoB <= 0 || opcaoB > qtdConjuntos || opcaoB == opcaoA);
+
+
         int resultadoIntersecao[20], cont = 0;
-        for(int i = 0; i < c[0].tamanho; i++){
-            for(int j = 0; j < c[1].tamanho; j++){
-                if(c[0].conjunto[i] == c[1].conjunto[j]){
-                    resultadoIntersecao[cont] = c[0].conjunto[i];
+        for(int i = 0; i < c[opcaoA-1].tamanho; i++){
+            for(int j = 0; j < c[opcaoB-1].tamanho; j++){
+                if(c[opcaoA-1].conjunto[i] == c[opcaoB-1].conjunto[j]){
+                    resultadoIntersecao[cont] = c[opcaoA-1].conjunto[i];
                     cont++;
                 }
             }
         }
 
-        cout << "Conjunto 1 & Conjuto 2: { ";
+        cout << "Conjunto " << opcaoA << " & Conjuto " << opcaoB << " : { ";
         for(int i = 0; i < cont; i++){
             cout << resultadoIntersecao[i] << " ";
         }
